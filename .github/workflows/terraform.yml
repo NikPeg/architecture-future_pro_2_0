@@ -20,6 +20,9 @@ on:
         type: choice
         options: [dev, stage, prod]
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 # Prevent concurrent runs for the same branch/env to avoid state conflicts.
 concurrency:
   group: terraform-${{ github.ref }}
