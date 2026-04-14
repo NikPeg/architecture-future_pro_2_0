@@ -10,3 +10,4 @@ CLAUDE.md
 **/.terraformrc
 **/terraform.rc
 **/terraform.tfvars
+**/backend.hcl

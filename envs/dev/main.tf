@@ -6,6 +6,20 @@ terraform {
     }
   }
   required_version = ">= 1.4.0"
+
+  backend "s3" {
+    endpoint = "storage.yandexcloud.net"
+    bucket   = "future20-tfstate"
+    key      = "dev/terraform.tfstate"
+    region   = "ru-central1"
+
+    # Credentials are passed via AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY env vars
+    skip_region_validation      = true
+    skip_credentials_validation = true
+    skip_metadata_api_check     = true
+    skip_requesting_account_id  = true
+    force_path_style            = true
+  }
 }
 
 provider "yandex" {
