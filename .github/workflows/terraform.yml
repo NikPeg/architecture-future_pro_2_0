@@ -20,9 +20,6 @@ on:
         type: choice
         options: [dev, stage, prod]
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 # Prevent concurrent runs for the same branch/env to avoid state conflicts.
 concurrency:
   group: terraform-${{ github.ref }}
@@ -62,9 +59,9 @@ jobs:
       TF_VAR_yc_cloud_id:    ${{ secrets.YC_CLOUD_ID }}
       TF_VAR_ssh_public_key: ${{ secrets.SSH_PUBLIC_KEY }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: hashicorp/setup-terraform@v3
+      - uses: hashicorp/setup-terraform@v4
         with:
           terraform_version: "~> 1.4"
 
@@ -99,7 +96,7 @@ jobs:
         run: terraform plan -var-file=ci.tfvars -out=tfplan
 
       # Save the compiled plan so the apply job uses exactly what was reviewed.
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: tfplan-${{ needs.resolve-env.outputs.env }}-${{ github.run_id }}
           path: envs/${{ needs.resolve-env.outputs.env }}/tfplan
@@ -128,9 +125,9 @@ jobs:
       TF_VAR_yc_cloud_id:    ${{ secrets.YC_CLOUD_ID }}
       TF_VAR_ssh_public_key: ${{ secrets.SSH_PUBLIC_KEY }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: hashicorp/setup-terraform@v3
+      - uses: hashicorp/setup-terraform@v4
         with:
           terraform_version: "~> 1.4"
 
@@ -155,7 +152,7 @@ jobs:
       - name: terraform init
         run: terraform init
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: tfplan-${{ needs.resolve-env.outputs.env }}-${{ github.run_id }}
           path: envs/${{ needs.resolve-env.outputs.env }}
