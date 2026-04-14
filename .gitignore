@@ -4,9 +4,9 @@ CLAUDE.md
 
 # Terraform state and sensitive files
 **/.terraform/
-**/.terraform.lock.hcl
 **/terraform.tfstate
 **/terraform.tfstate.backup
 **/terraform.tfstate.*.backup
 **/.terraformrc
 **/terraform.rc
+**/terraform.tfvars

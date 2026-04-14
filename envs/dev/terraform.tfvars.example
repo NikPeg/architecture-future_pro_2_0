@@ -1,0 +1,34 @@
+# Copy this file to terraform.tfvars and fill in the values.
+# Get values via:
+#   yc iam create-token          → yc_token
+#   yc config get cloud-id       → yc_cloud_id
+#   yc config get folder-id      → yc_folder_id
+#   yc vpc subnet list           → subnet_id
+#   cat ~/.ssh/id_rsa.pub        → ssh_public_key
+
+yc_token     = "YOUR_YC_OAUTH_TOKEN"
+yc_cloud_id  = "YOUR_CLOUD_ID"
+yc_folder_id = "YOUR_FOLDER_ID"
+
+vm_name       = "future-dev-vm"
+zone          = "ru-central1-a"
+cores         = 2
+memory        = 2
+core_fraction = 20
+
+disk_name    = "future-dev-boot"
+disk_type    = "network-hdd"
+disk_size    = 20
+image_family = "ubuntu-2204-lts"
+
+secondary_disk_size = 0
+
+subnet_id      = "YOUR_SUBNET_ID_ru-central1-a"
+nat            = true
+ssh_user       = "ubuntu"
+ssh_public_key = "ssh-rsa AAAA...your-key... user@host"
+
+labels = {
+  env     = "dev"
+  project = "future20"
+}
