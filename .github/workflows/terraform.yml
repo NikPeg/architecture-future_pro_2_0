@@ -2,10 +2,10 @@ name: Terraform CI/CD
 
 on:
   push:
-    branches: [main, develop]
     paths:
       - 'envs/**'
       - 'modules/**'
+      - '.github/workflows/terraform.yml'
   pull_request:
     branches: [main, develop]
     paths:
@@ -105,8 +105,11 @@ jobs:
   # ── terraform apply ───────────────────────────────────────────────────────────
   apply:
     needs: [resolve-env, plan]
-    # Skip apply on pull requests — plan-only review is sufficient.
-    if: github.event_name != 'pull_request'
+    # Apply only on main/develop or manual dispatch — all other branches get plan only.
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      github.ref == 'refs/heads/main' ||
+      github.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
     # Assigning an environment name enables GitHub Environment protection rules.
     # Configure "prod" in repo Settings → Environments with required reviewers

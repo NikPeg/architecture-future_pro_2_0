@@ -70,14 +70,18 @@ yc iam access-key create --service-account-name tf-ci
 
 ### Через пуш в ветку
 
+`plan` запускается при пуше в **любую** ветку (если изменились файлы в `envs/`, `modules/` или сам воркфлоу).
+`apply` выполняется только при пуше в `main` (→ stage) или `develop` (→ dev).
+
 ```bash
+# Просто запустить plan — подойдёт любая ветка:
+git push origin my
+
+# Запустить plan + apply в dev:
 git checkout develop
-# внести любое изменение, например обновить метку в ci.tfvars
-git commit -am "chore: trigger dev deploy"
+git merge my
 git push origin develop
 ```
-
-Пайплайн запустится автоматически: `plan` → `apply` в dev.
 
 ### Вручную (любое окружение)
 
